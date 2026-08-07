@@ -4,3 +4,5 @@
 # Kotlin/Amper
 /build/
 
+# Lean
+/.lake
