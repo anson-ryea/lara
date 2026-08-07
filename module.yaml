@@ -1,0 +1,7 @@
+product: jvm/app
+
+dependencies:
+  - io.github.cdimascio:dotenv-kotlin:6.5.1
+  - com.github.ajalt.clikt:clikt:5.1.0
+  - ai.koog:koog-agents:1.1.1
+  - ai.koog:koog-agents-additions:1.1.1-beta
