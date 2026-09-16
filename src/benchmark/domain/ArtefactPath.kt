@@ -1,0 +1,29 @@
+package benchmark.domain
+
+import java.nio.file.Path
+
+@JvmInline
+value class ArtefactPath(val value: Path) {
+    init {
+        require(isSafeRelativePath(value)) {
+            "artefact path must be a safe relative path: $value"
+        }
+    }
+
+    override fun toString(): String = value.toString()
+
+    companion object {
+        private val segmentPattern =
+            Regex("[A-Za-z0-9][A-Za-z0-9._-]*")
+
+        private fun isSafeRelativePath(path: Path): Boolean {
+            return !(path.toString().isBlank() || path.isAbsolute) && path.all { segment ->
+                val segmentName = segment.toString()
+
+                segmentName != "." &&
+                        segmentName != ".." &&
+                        segmentPattern.matches(segmentName)
+            }
+        }
+    }
+}

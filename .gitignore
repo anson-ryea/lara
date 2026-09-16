@@ -6,3 +6,6 @@
 
 # Lean
 /.lake
+
+# macOS metadata
+.DS_Store
