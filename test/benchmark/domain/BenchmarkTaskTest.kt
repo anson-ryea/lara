@@ -12,13 +12,32 @@ class BenchmarkTaskTest {
     )
 
     private val manifest = TaskManifest(
-        schemaVersion = 2,
+        schemaVersion = TaskManifest.SCHEMA_VERSION,
         taskId = TaskId("task_1.1_theorem_11"),
+        paperId = PaperId("paper_1"),
+        sourceResultId = SourceResultId("theorem_11"),
         taskType = TaskTypeId(2),
         protocol = ProtocolId("lean_proof"),
         status = TaskStatus.CANDIDATE_PENDING_INDEPENDENT_REVIEW,
         condition = ConditionId("paper_evidence"),
+        contextId = ContextId("theorem_11"),
         artefacts = listOf(declaredArtefact),
+        submission = SubmissionSpecification(
+            kind = SubmissionKind("lean_proof_body"),
+            allowLocalHelpers = true,
+            allowTopLevelDeclarations = false,
+        ),
+        evaluation = EvaluationSpecification(
+            kind = EvaluationKind("lean_kernel"),
+            timeoutSeconds = 180,
+            allowedAxioms = setOf(
+                "propext",
+                "Classical.choice",
+                "Quot.sound",
+            ),
+            forbiddenMechanisms = setOf("sorry"),
+            forbiddenIdentifiers = emptySet(),
+        ),
     )
 
     private val packageDirectory = Path(

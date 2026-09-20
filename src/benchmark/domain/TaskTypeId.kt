@@ -1,5 +1,6 @@
 package benchmark.domain
 
+/** An open, positive identifier for a benchmark task type. */
 @JvmInline
 value class TaskTypeId(val value: Int) {
     init {

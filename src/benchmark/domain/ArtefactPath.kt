@@ -2,6 +2,7 @@ package benchmark.domain
 
 import java.nio.file.Path
 
+/** A relative artefact path that cannot escape its task package. */
 @JvmInline
 value class ArtefactPath(val value: Path) {
     init {

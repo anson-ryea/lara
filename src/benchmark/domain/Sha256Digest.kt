@@ -1,5 +1,6 @@
 package benchmark.domain
 
+/** A SHA-256 digest encoded as 64 lowercase hexadecimal characters. */
 @JvmInline
 value class Sha256Digest(val value: String) {
     init {

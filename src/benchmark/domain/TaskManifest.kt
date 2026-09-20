@@ -1,17 +1,23 @@
 package benchmark.domain
 
+/** The validated, versioned description of one benchmark task. */
 data class TaskManifest(
     val schemaVersion: Int,
     val taskId: TaskId,
+    val paperId: PaperId,
+    val sourceResultId: SourceResultId,
     val taskType: TaskTypeId,
     val protocol: ProtocolId,
     val status: TaskStatus,
     val condition: ConditionId,
+    val contextId: ContextId,
     val artefacts: List<TaskArtefact>,
+    val submission: SubmissionSpecification,
+    val evaluation: EvaluationSpecification,
 ) {
     init {
-        require(schemaVersion > 0) {
-            "schema version must be positive: $schemaVersion"
+        require(schemaVersion == SCHEMA_VERSION) {
+            "task manifest schema version must be $SCHEMA_VERSION: $schemaVersion"
         }
         require(artefacts.isNotEmpty()) {
             "task manifest must contain at least one artefact"
@@ -29,5 +35,9 @@ data class TaskManifest(
                         .sortedBy(ArtefactPath::toString)
                         .joinToString()
         }
+    }
+
+    companion object {
+        const val SCHEMA_VERSION = 1
     }
 }

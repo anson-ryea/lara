@@ -2,6 +2,7 @@ package benchmark.domain
 
 import java.nio.file.Path
 
+/** A task manifest paired with its absolute, normalised package directory. */
 data class BenchmarkTask(
     val manifest: TaskManifest,
     val packageDirectory: Path,
@@ -22,6 +23,7 @@ data class BenchmarkTask(
         }
     }
 
+    /** Resolves an artefact declared by this task within its package directory. */
     fun pathFor(artefact: TaskArtefact): Path {
         require(artefact in manifest.artefacts) {
             "artefact is not declared by task ${manifest.taskId}"

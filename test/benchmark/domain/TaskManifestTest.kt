@@ -20,7 +20,7 @@ class TaskManifestTest {
     }
 
     @Test
-    fun rejectsNonPositiveSchemaVersion() {
+    fun rejectsUnsupportedSchemaVersion() {
         for (version in listOf(0, -1)) {
             assertFailsWith<IllegalArgumentException> {
                 manifest(schemaVersion = version)
@@ -48,7 +48,7 @@ class TaskManifestTest {
     }
 
     private fun manifest(
-        schemaVersion: Int = 2,
+        schemaVersion: Int = TaskManifest.SCHEMA_VERSION,
         artefacts: List<TaskArtefact> = listOf(
             artefact("lean_context", "Context.lean"),
         ),
@@ -56,11 +56,30 @@ class TaskManifestTest {
         return TaskManifest(
             schemaVersion = schemaVersion,
             taskId = TaskId("task_1.1_theorem_11"),
+            paperId = PaperId("paper_1"),
+            sourceResultId = SourceResultId("theorem_11"),
             taskType = TaskTypeId(2),
             protocol = ProtocolId("lean_proof"),
             status = TaskStatus.CANDIDATE_PENDING_INDEPENDENT_REVIEW,
             condition = ConditionId("paper_evidence"),
+            contextId = ContextId("theorem_11"),
             artefacts = artefacts,
+            submission = SubmissionSpecification(
+                kind = SubmissionKind("lean_proof_body"),
+                allowLocalHelpers = true,
+                allowTopLevelDeclarations = false,
+            ),
+            evaluation = EvaluationSpecification(
+                kind = EvaluationKind("lean_kernel"),
+                timeoutSeconds = 180,
+                allowedAxioms = setOf(
+                    "propext",
+                    "Classical.choice",
+                    "Quot.sound",
+                ),
+                forbiddenMechanisms = setOf("sorry"),
+                forbiddenIdentifiers = emptySet(),
+            ),
         )
     }
 
