@@ -18,7 +18,7 @@ class LeanProofProtocol(
             leanPromptValues(
                 task = task,
                 reader = reader,
-                marker = "__BENCHMARK_PROOF__",
+                marker = MARKER,
                 allowedEvidenceRoles = setOf(paperEvidenceRole, enrichedEvidenceRole),
                 evidenceRequired = false,
             ),
@@ -27,5 +27,9 @@ class LeanProofProtocol(
 
     override fun extractSubmission(response: String): String {
         return submissionExtractor.extractLeanProof(response)
+    }
+
+    companion object {
+        internal const val MARKER = "__BENCHMARK_PROOF__"
     }
 }
