@@ -8,7 +8,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
 /** Runs Lean through the project's Lake environment. */
-class LakeLeanProcess(private val projectRoot: Path): LeanProcess {
+class LeanLakeProcess(private val projectRoot: Path): LeanProcess {
     init {
         require(projectRoot.isAbsolute && projectRoot == projectRoot.normalize()) {
             "project root must be absolute and normalised"
