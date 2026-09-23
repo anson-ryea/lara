@@ -20,6 +20,7 @@ import benchmark.domain.TaskTypeId
 import java.nio.file.Path
 import kotlin.io.path.Path as pathOf
 import kotlin.io.path.readText
+import kotlin.time.Duration
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
@@ -127,6 +128,14 @@ class JsonTaskManifestReader(
             evaluationFields,
         )
 
+        val timeout = try {
+            Duration.parseIsoString(
+                evaluation.requiredString(manifestPath, "timeout"),
+            )
+        } catch (cause: IllegalArgumentException) {
+            fail(manifestPath, "field 'timeout' must be an ISO-8601 duration", cause)
+        }
+
         return TaskManifest(
             schemaVersion = TaskManifest.SCHEMA_VERSION,
             taskId = TaskId(document.requiredString(manifestPath, "task_id")),
@@ -155,7 +164,7 @@ class JsonTaskManifestReader(
             ),
             evaluation = EvaluationSpecification(
                 kind = EvaluationKind(evaluation.requiredString(manifestPath, "kind")),
-                timeoutSeconds = evaluation.requiredInt(manifestPath, "timeout_seconds"),
+                timeout = timeout,
                 allowedAxioms = evaluation.requiredStringSet(
                     manifestPath,
                     "allowed_axioms",
@@ -334,7 +343,7 @@ class JsonTaskManifestReader(
         )
         private val evaluationFields = setOf(
             "kind",
-            "timeout_seconds",
+            "timeout",
             "allowed_axioms",
             "forbidden_mechanisms",
             "forbidden_identifiers",

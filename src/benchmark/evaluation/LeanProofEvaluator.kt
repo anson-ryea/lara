@@ -7,7 +7,6 @@ import benchmark.domain.EvaluationKind
 import benchmark.domain.EvaluationResult
 import benchmark.domain.ProtocolId
 import kotlin.io.path.readText
-import kotlin.time.Duration.Companion.seconds
 
 class LeanProofEvaluator(
     private val leanProcess: LeanProcess,
@@ -57,7 +56,7 @@ class LeanProofEvaluator(
         return when (
             val run = leanProcess.run(
                 source,
-                task.manifest.evaluation.timeoutSeconds.seconds,
+                task.manifest.evaluation.timeout,
             )
         ) {
             is LeanProcessResult.Completed -> {

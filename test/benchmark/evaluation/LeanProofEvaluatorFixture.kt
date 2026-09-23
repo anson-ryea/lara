@@ -1,5 +1,6 @@
 package benchmark.evaluation
 
+import kotlin.time.Duration.Companion.seconds
 import benchmark.dataset.HashCalculator
 import benchmark.domain.*
 import java.nio.file.Files
@@ -58,7 +59,7 @@ internal fun withLeanProofTask(block: (BenchmarkTask) -> Unit) {
             ),
             evaluation = EvaluationSpecification(
                 kind = EvaluationKind("lean_kernel"),
-                timeoutSeconds = 180,
+            timeout = 180.seconds,
                 allowedAxioms = setOf("propext"),
                 forbiddenMechanisms = setOf("sorry"),
                 forbiddenIdentifiers = emptySet(),

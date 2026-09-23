@@ -1,5 +1,6 @@
 package benchmark.protocol
 
+import kotlin.time.Duration.Companion.seconds
 import benchmark.domain.ArtefactPath
 import benchmark.domain.ArtefactRole
 import benchmark.domain.BenchmarkTask
@@ -135,7 +136,7 @@ class LeanProofProtocolTest {
                 ),
                 evaluation = EvaluationSpecification(
                     kind = EvaluationKind("lean_kernel"),
-                    timeoutSeconds = 180,
+            timeout = 180.seconds,
                     allowedAxioms = emptySet(),
                     forbiddenMechanisms = emptySet(),
                     forbiddenIdentifiers = emptySet(),

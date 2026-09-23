@@ -103,7 +103,7 @@
       "additionalProperties": false,
       "required": [
         "kind",
-        "timeout_seconds",
+        "timeout",
         "allowed_axioms",
         "forbidden_mechanisms",
         "forbidden_identifiers"
@@ -112,9 +112,10 @@
         "kind": {
           "$ref": "#/$defs/lowerSnakeCase"
         },
-        "timeout_seconds": {
-          "type": "integer",
-          "minimum": 1
+        "timeout": {
+          "type": "string",
+          "format": "duration",
+          "description": "A finite, positive ISO-8601 duration, checked by the manifest reader."
         },
         "allowed_axioms": {
           "$ref": "#/$defs/nonBlankStringSet"

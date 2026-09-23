@@ -1,5 +1,6 @@
 package benchmark.domain
 
+import kotlin.time.Duration.Companion.seconds
 import kotlin.io.path.Path
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -71,7 +72,7 @@ class TaskManifestTest {
             ),
             evaluation = EvaluationSpecification(
                 kind = EvaluationKind("lean_kernel"),
-                timeoutSeconds = 180,
+            timeout = 180.seconds,
                 allowedAxioms = setOf(
                     "propext",
                     "Classical.choice",

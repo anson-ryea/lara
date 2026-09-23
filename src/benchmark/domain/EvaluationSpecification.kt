@@ -1,16 +1,18 @@
 package benchmark.domain
 
+import kotlin.time.Duration
+
 /** Constraints used when evaluating a task submission. */
 data class EvaluationSpecification(
     val kind: EvaluationKind,
-    val timeoutSeconds: Int,
+    val timeout: Duration,
     val allowedAxioms: Set<String>,
     val forbiddenMechanisms: Set<String>,
     val forbiddenIdentifiers: Set<String>,
 ) {
     init {
-        require(timeoutSeconds > 0) {
-            "evaluation timeout must be positive: $timeoutSeconds"
+        require(timeout.isFinite() && timeout > Duration.ZERO) {
+            "evaluation timeout must be finite and positive: $timeout"
         }
         require(allowedAxioms.none(String::isBlank)) {
             "allowed axiom names must not be blank"
