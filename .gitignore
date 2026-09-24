@@ -4,6 +4,9 @@
 # Kotlin/Amper
 /build/
 
+# Benchmark run outputs
+/runs/
+
 # Lean
 /.lake
 
